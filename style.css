@@ -78,3 +78,33 @@ a {
 }
 
 
+.input-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 50px;
+    gap: 20px;
+}
+
+#newTodoInput {
+    padding: 10px;
+    width: 300px;
+    font-size: 18px;
+    border: 2px solid #32ce8a;
+    border-radius: 5px;
+}
+
+.add {
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.edit-input {
+    padding: 10px; 
+    font-size: 18px; 
+    border: 2px solid #32ce8a; 
+    border-radius: 5px; 
+    width: 100%;
+    box-sizing: border-box; 
+}
