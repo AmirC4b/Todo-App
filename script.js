@@ -2,6 +2,27 @@ let todos = [];
 let currentFilter = 'all'; 
 
 
+function updateDate() {
+    const timeElement = document.querySelector('.time');
+    const dayElement = document.querySelector('.day');
+
+    const now = new Date();
+
+    const day = now.getDate();
+    const month = now.toLocaleString('en', { month: 'short' }); 
+    const year = now.getFullYear();
+
+
+    dayElement.textContent = day;
+
+
+    timeElement.innerHTML = `<span class="day">${day}</span> ${month} ${year}`;
+}
+
+
+updateDate();
+
+
 function addTodo(text) {
     if (text.trim() === "") return; 
 
