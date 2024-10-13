@@ -38,12 +38,43 @@ a {
     padding: 50px 100px;
 }
 .item {
+    font-size: 20px;
+    font-weight: 700;
     display: flex;
     justify-content: space-between;
+    align-items: center;
     padding: 20px;
     border: 2px solid #32ce8a;
     border-radius: 5px;
     
+}
+.options {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    gap: 10px;
+}
+.sort {
+    margin-top: 50px;
+    display: flex;
+    justify-content: space-around;
+}
+.sort .sorted {
+    cursor: pointer;
+}
+.add {
+    display: flex;
+    justify-content: center;
+    margin-top: 70px;
+}
+.add div {
+    cursor: pointer;
+}
+.delete {
+    cursor: pointer;
+}
+.edit {
+    cursor: pointer;
 }
 
 
