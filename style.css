@@ -38,16 +38,18 @@ a {
     padding: 50px 100px;
 }
 .item {
+    margin: 20px 50px;
     font-size: 20px;
     font-weight: 700;
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding: 20px;
+    padding: 20px 50px; 
     border: 2px solid #32ce8a;
     border-radius: 5px;
     
 }
+
 .options {
     display: flex;
     justify-content: flex-end;
@@ -65,7 +67,7 @@ a {
 .add {
     display: flex;
     justify-content: center;
-    margin-top: 70px;
+    margin-top: 10px;
 }
 .add div {
     cursor: pointer;
@@ -80,6 +82,7 @@ a {
 
 .input-container {
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     margin-top: 50px;
