@@ -1,30 +1,11 @@
 let todos = [];
+let todoToDelete = null; 
+let undoTimeout = null; 
 let currentFilter = 'all'; 
 
-
-function updateDate() {
-    const timeElement = document.querySelector('.time');
-    const dayElement = document.querySelector('.day');
-
-    const now = new Date();
-
-    const day = now.getDate();
-    const month = now.toLocaleString('en', { month: 'short' }); 
-    const year = now.getFullYear();
-
-
-    dayElement.textContent = day;
-
-
-    timeElement.innerHTML = `<span class="day">${day}</span> ${month} ${year}`;
-}
-
-
-updateDate();
-
-
+// Adds a new todo to the list
 function addTodo(text) {
-    if (text.trim() === "") return; 
+    if (text.trim() === "") return;
 
     const newTodo = {
         id: Date.now(),
@@ -32,11 +13,11 @@ function addTodo(text) {
         completed: false,
     };
     todos.push(newTodo);
-    document.getElementById('newTodoInput').value = ''; 
-    renderTodos(currentFilter); 
+    document.getElementById('newTodoInput').value = '';
+    renderTodos(currentFilter);
 }
 
-
+// Allows editing of a specific todo item
 function editTodo(id) {
     const todoElement = document.querySelector(`[data-id="${id}"]`);
     const textDiv = todoElement.querySelector('.text');
@@ -46,15 +27,15 @@ function editTodo(id) {
     input.type = 'text';
     input.value = todo.text;
     input.classList.add('edit-input');
-    textDiv.innerHTML = ''; 
+    textDiv.innerHTML = '';
     textDiv.appendChild(input);
 
     input.focus();
     input.select();
 
     const saveChanges = () => {
-        todo.text = input.value.trim(); 
-        renderTodos(currentFilter); 
+        todo.text = input.value.trim();
+        renderTodos(currentFilter);
     };
 
     input.addEventListener('keypress', (e) => {
@@ -66,20 +47,78 @@ function editTodo(id) {
     input.addEventListener('blur', saveChanges);
 }
 
+// Displays the delete confirmation modal
+function showDeleteConfirmModal(todoId) {
+    const modal = document.getElementById('deleteConfirmModal');
+    modal.style.display = 'block';
 
-function deleteTodo(id) {
-    todos = todos.filter(todo => todo.id !== id);
-    renderTodos(currentFilter); 
+    document.getElementById('confirmDelete').onclick = () => confirmDelete(todoId);
+    document.getElementById('cancelDelete').onclick = () => closeDeleteConfirmModal();
+}
+
+// Closes the delete confirmation modal
+function closeDeleteConfirmModal() {
+    const modal = document.getElementById('deleteConfirmModal');
+    modal.style.display = 'none';
+}
+
+// Confirms deletion of a todo
+function confirmDelete(todoId) {
+    todoToDelete = todos.find(todo => todo.id === todoId);
+
+    
+    todos = todos.filter(todo => todo.id !== todoId);
+    renderTodos(currentFilter);
+
+    
+    showUndoMessage();
+
+   
+    closeDeleteConfirmModal();
+}
+
+// Shows undo delete message
+function showUndoMessage() {
+    const undoMessage = document.getElementById('undoMessage');
+    undoMessage.style.display = 'block';
+
+    
+    undoTimeout = setTimeout(() => {
+        undoMessage.style.display = 'none';
+        todoToDelete = null; 
+    }, 5000);
+}
+
+// Undoes the deletion of a todo
+function undoDelete() {
+    if (todoToDelete) {
+        todos.push(todoToDelete);
+        renderTodos(currentFilter);
+        todoToDelete = null;
+
+        
+        const undoMessage = document.getElementById('undoMessage');
+        undoMessage.style.display = 'none';
+        clearTimeout(undoTimeout);
+    }
 }
 
 
+document.getElementById('undoButton').addEventListener('click', undoDelete);
+
+// Opens the delete confirmation modal
+function deleteTodo(id) {
+    showDeleteConfirmModal(id);
+}
+
+// Toggles completion status of a todo
 function toggleComplete(id) {
     const todo = todos.find(todo => todo.id === id);
     todo.completed = !todo.completed;
-    renderTodos(currentFilter); 
+    renderTodos(currentFilter);
 }
 
-
+// Renders todos based on the current filter
 function renderTodos(filter = 'all') {
     const list = document.querySelector('.list');
     list.innerHTML = ''; 
@@ -128,15 +167,14 @@ function renderTodos(filter = 'all') {
         list.appendChild(item);
     });
 }
-
-
+// Handles sorting todos by filter type
 function handleSort(sortType) {
-    currentFilter = sortType; 
+    currentFilter = sortType;
     renderTodos(sortType);
 }
 
 
-document.querySelector('.add').addEventListener('click', () => {
+document.querySelector('.add img').addEventListener('click', () => {
     const input = document.getElementById('newTodoInput');
     const text = input.value;
     addTodo(text);

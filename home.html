@@ -14,9 +14,6 @@
                     <h2 class="name">Hey, Amir</h2>
                 </div>
                 <div>
-                    <div class="time"><span class="day">13</span> Oct 2024</div>
-                </div>
-                <div>
                     <img width="30px" src="./img/profile.png" alt="profile-pic">
                 </div>
             </div>
@@ -34,10 +31,20 @@
             <div class="sort">
             <div class="sorted">Sort By <span> all</span></div>
         </div>
+        <div id="deleteConfirmModal" class="modal" style="display: none;">
+            <div class="modal-content">
+                <p>Are You Sure To Delete Todo?</p>
+                <button id="confirmDelete">Yes</button>
+                <button id="cancelDelete">No</button>
+            </div>
+        </div>
+        
         <div class="list">
 
         </div>
-
+        <div id="undoMessage" class="undo-message" style="display: none;">
+            <p>Deleted!!<button id="undoButton">Undo</button></p>
+        </div>
     </main>
 </body>
 </html>
